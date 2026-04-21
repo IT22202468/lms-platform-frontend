@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -10,9 +11,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <h2 className="mb-[var(--space-6)] text-xl font-bold">
-              OtterSpace
-            </h2>
+            <div className="mb-[var(--space-6)] flex items-center gap-[var(--space-3)]">
+              <Image
+                src="/logo.svg"
+                alt="OtterSpace logo"
+                width={32}
+                height={32}
+              />
+              <h2 className="text-xl font-bold">
+                OtterSpace
+              </h2>
+            </div>
             <p className="text-[var(--font-size-xs)] leading-relaxed text-gray-300">
               Learn without limits. Access world-class courses from expert
               instructors, anytime, anywhere.

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -27,29 +28,15 @@ export default function Header() {
           className="group flex items-center gap-[var(--space-3)] text-[var(--font-size-lg)] font-bold text-[var(--color-text-primary)] no-underline"
           aria-label="OtterSpace home"
         >
-          {/* <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            aria-hidden="true"
+          <Image
+            src="/logo.svg"
+            alt="OtterSpace logo"
+            width={32}
+            height={32}
             className="transition-transform duration-300 group-hover:scale-110"
-          >
-            <rect width="32" height="32" rx="8" fill="var(--color-brand-primary)" />
-            <text
-              x="50%"
-              y="55%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fill="white"
-              fontSize="16"
-              fontWeight="700"
-            >
-              O
-            </text>
-          </svg>
-          <span className="hidden transition-colors duration-300 group-hover:text-[var(--color-brand-primary)] sm:inline">OtterSpace</span> */}
-          <h1 className="text-3xl">OtterSpace</h1>
+            priority
+          />
+          <span className="hidden text-3xl text-[var(--color-brand-primary)] sm:inline">OtterSpace</span>
         </Link>
 
         {/* Desktop Nav */}
