@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <h2 className="mb-[var(--space-6)] text-[var(--font-size-md)] font-bold">
+            <h2 className="mb-[var(--space-6)] text-xl font-bold">
               OtterSpace
             </h2>
             <p className="text-[var(--font-size-xs)] leading-relaxed text-gray-300">

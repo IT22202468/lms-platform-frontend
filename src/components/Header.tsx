@@ -27,7 +27,7 @@ export default function Header() {
           className="group flex items-center gap-[var(--space-3)] text-[var(--font-size-lg)] font-bold text-[var(--color-text-primary)] no-underline"
           aria-label="OtterSpace home"
         >
-          <svg
+          {/* <svg
             width="32"
             height="32"
             viewBox="0 0 32 32"
@@ -48,7 +48,8 @@ export default function Header() {
               O
             </text>
           </svg>
-          <span className="hidden transition-colors duration-300 group-hover:text-[var(--color-brand-primary)] sm:inline">OtterSpace</span>
+          <span className="hidden transition-colors duration-300 group-hover:text-[var(--color-brand-primary)] sm:inline">OtterSpace</span> */}
+          <h1 className="text-3xl">OtterSpace</h1>
         </Link>
 
         {/* Desktop Nav */}

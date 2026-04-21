@@ -16,17 +16,17 @@ export default function CourseCard({ course }: CourseCardProps) {
     >
       {/* Thumbnail */}
       <div className="relative h-[160px] overflow-hidden bg-[var(--color-surface-muted)]">
-        <Image
-          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
+        {/* <Image
+          src={course.thumbnailUrl || "/default-course-thumbnail.webp"}
           alt={course.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        /> */}
         <div className="absolute inset-0 bg-black/5 transition-opacity duration-300 group-hover:opacity-0" />
         
         {/* Category Badge */}
         <div className="absolute top-3 left-3 rounded bg-white/90 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--color-brand-primary)] backdrop-blur-sm">
-          Computer Science
+          {/* {course.category} */}
         </div>
       </div>
 
@@ -44,13 +44,13 @@ export default function CourseCard({ course }: CourseCardProps) {
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded-full bg-gray-200" />
             <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
-              Prof. Sarah Johnson
+              {/* {course.instructor} */}
             </span>
           </div>
 
           {course.published ? (
             <span className="rounded-full bg-[var(--color-brand-tertiary)] px-[var(--space-3)] py-[var(--space-1)] text-[10px] font-bold text-[var(--color-brand-primary)]">
-              PRO
+              {/* {course.publishedDate ? new Date(course.publishedDate).toLocaleDateString() : "PUBLISHED"} */}
             </span>
           ) : (
             <span className="rounded-full bg-amber-50 px-[var(--space-3)] py-[var(--space-1)] text-[10px] font-bold text-amber-700">
