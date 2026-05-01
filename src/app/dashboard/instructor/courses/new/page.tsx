@@ -37,8 +37,8 @@ export default function NewCoursePage() {
 
     setLoading(true);
     try {
-      await createCourse(token!, { title, description });
-      router.push("/dashboard/instructor");
+      const created = await createCourse(token!, { title, description });
+      router.push(`/dashboard/instructor/courses/${created.id}/edit`);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.errors ? err.errors.join(", ") : err.message);

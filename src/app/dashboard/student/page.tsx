@@ -153,7 +153,7 @@ export default function StudentDashboard() {
           <div className="grid grid-cols-1 gap-[var(--space-8)] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {enrolledCourses.map(({ course, enrollment }) => (
               <div key={enrollment.id} className="relative">
-                <CourseCard course={course} />
+                <CourseCard course={course} token={token ?? undefined} />
                 <div className="mt-[var(--space-2)] text-[12px] text-[var(--color-text-secondary)]">
                   Enrolled{" "}
                   {new Date(enrollment.enrolledAt).toLocaleDateString("en-US", {
