@@ -28,7 +28,7 @@ function toPayloadItems(items: LectureContentItem[]) {
 
 export default function EditCoursePage() {
   const { id } = useParams<{ id: string }>();
-  const { token, isInstructor } = useAuth();
+  const { token, isInstructor, isLoading } = useAuth();
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -44,7 +44,7 @@ export default function EditCoursePage() {
   const [matBusy, setMatBusy] = useState(false);
 
   useEffect(() => {
-    if (!token || !isInstructor) return;
+    if (isLoading || !token || !isInstructor) return;
 
     (async () => {
       try {
@@ -59,10 +59,19 @@ export default function EditCoursePage() {
         setFetching(false);
       }
     })();
-  }, [token, isInstructor, id]);
+  }, [token, isInstructor, isLoading, id]);
+
+  useEffect(() => {
+    if (!isLoading && !isInstructor) {
+      router.replace("/");
+    }
+  }, [isLoading, isInstructor, router]);
+
+  if (isLoading) {
+    return null;
+  }
 
   if (!isInstructor) {
-    router.push("/");
     return null;
   }
 
@@ -228,21 +237,48 @@ export default function EditCoursePage() {
             className="h-full w-full object-cover"
           />
         </div>
-        <label className="block text-[var(--font-size-xs)] font-semibold text-[var(--color-text-primary)]">
-          <span className="mb-[var(--space-2)] block">Upload thumbnail</span>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/gif,image/webp"
-            disabled={thumbBusy}
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) void handleThumbnailChange(f);
-              e.target.value = "";
-            }}
-            className="text-[var(--font-size-xs)]"
-          />
-        </label>
-        {thumbBusy ? <p className="mt-[var(--space-2)] text-[12px] text-[var(--color-text-secondary)]">Uploading…</p> : null}
+        <div className="space-y-[var(--space-3)]">
+          <label htmlFor="thumb-input" className="block text-[var(--font-size-xs)] font-semibold text-[var(--color-text-primary)]">
+            Upload thumbnail
+          </label>
+          <div className="relative">
+            <input
+              id="thumb-input"
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              disabled={thumbBusy}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void handleThumbnailChange(f);
+                e.target.value = "";
+              }}
+              className="sr-only"
+            />
+            <label
+              htmlFor="thumb-input"
+              className="flex items-center justify-center gap-[var(--space-3)] cursor-pointer rounded-[var(--radius-xs)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-surface-muted)] px-[var(--space-6)] py-[var(--space-6)] text-center transition-colors hover:border-[var(--color-brand-primary)] hover:bg-[var(--color-surface-raised)] disabled:cursor-not-allowed"
+            >
+              {thumbBusy ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-brand-primary)] border-t-transparent"></div>
+                  <span className="text-[var(--font-size-xs)] font-medium text-[var(--color-text-secondary)]">Uploading…</span>
+                </>
+              ) : (
+                <>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--color-brand-primary)]">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  <div className="text-left">
+                    <p className="text-[var(--font-size-xs)] font-semibold text-[var(--color-text-primary)]">Click to upload</p>
+                    <p className="text-[10px] text-[var(--color-text-secondary)]">JPG, PNG, GIF or WebP</p>
+                  </div>
+                </>
+              )}
+            </label>
+          </div>
+        </div>
       </div>
 
       <div className="mb-[var(--space-8)] rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-[var(--space-6)]">
@@ -282,9 +318,23 @@ export default function EditCoursePage() {
             type="button"
             onClick={() => void handleMaterialUpload()}
             disabled={matBusy}
-            className="w-fit cursor-pointer rounded-[var(--radius-xs)] bg-[var(--color-text-primary)] px-[var(--space-6)] py-[var(--space-3)] text-[var(--font-size-xs)] font-semibold text-white disabled:opacity-60"
+            className="flex items-center justify-center gap-[var(--space-3)] w-fit cursor-pointer rounded-[var(--radius-xs)] bg-[var(--color-brand-primary)] px-[var(--space-6)] py-[var(--space-3)] text-[var(--font-size-xs)] font-semibold text-white transition-all hover:bg-[var(--color-brand-hover)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {matBusy ? "Uploading…" : "Upload material"}
+            {matBusy ? (
+              <>
+                <div className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                <span>Uploading…</span>
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                <span>Upload material</span>
+              </>
+            )}
           </button>
         </div>
       </div>
