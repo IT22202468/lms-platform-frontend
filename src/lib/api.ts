@@ -295,4 +295,16 @@ export function listCourseStudents(
   return request(`/courses/${courseId}/students?page=${page}&size=${size}`, { token });
 }
 
+export async function checkStudentEnrollmentInCourse(
+  token: string,
+  courseId: string
+): Promise<boolean> {
+  try {
+    const enrollments = await listStudentEnrollments(token, 0, 1000);
+    return enrollments.items.some((e) => e.courseId === courseId);
+  } catch {
+    return false;
+  }
+}
+
 export { ApiError };

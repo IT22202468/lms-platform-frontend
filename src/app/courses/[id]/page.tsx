@@ -9,6 +9,7 @@ import {
   getCourse,
   enrollInCourse,
   downloadCourseMaterial,
+  checkStudentEnrollmentInCourse,
   ApiError,
   type CourseResponse,
   type LectureContentItem,
@@ -47,6 +48,12 @@ export default function CourseDetailPage() {
       try {
         const data = await getCourse(token, id);
         setCourse(data);
+
+        // Check enrollment status for students
+        if (isStudent) {
+          const isEnrolled = await checkStudentEnrollmentInCourse(token, id);
+          setEnrolled(isEnrolled);
+        }
       } catch (err) {
         if (err instanceof ApiError && err.status === 404) {
           setError("Course not found.");
