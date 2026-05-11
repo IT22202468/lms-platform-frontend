@@ -67,6 +67,8 @@ export default function StudentDashboard() {
     Promise.resolve().then(() => fetchEnrollments());
   }, [authLoading, token, isStudent, fetchEnrollments, router]);
 
+  if (authLoading) return null;
+
   return (
     <div className="mx-auto max-w-[1440px] animate-fade-in px-[var(--space-6)] py-[32px] lg:px-[var(--space-8)]">
       {/* Header */}

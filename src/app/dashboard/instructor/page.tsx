@@ -77,6 +77,8 @@ export default function InstructorDashboard() {
   const published = data?.items.filter((c) => c.published).length || 0;
   const drafts = data?.items.filter((c) => !c.published).length || 0;
 
+  if (authLoading) return null;
+
   return (
     <div className="mx-auto max-w-[1440px] animate-fade-in px-[var(--space-6)] py-[32px] lg:px-[var(--space-8)]">
       {/* Header */}

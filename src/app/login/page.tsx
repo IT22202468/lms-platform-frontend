@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { login as apiLogin, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 
@@ -11,8 +11,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user, isLoading, isInstructor } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      router.replace(isInstructor ? "/dashboard/instructor" : "/dashboard/student");
+    }
+  }, [isLoading, user, isInstructor, router]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
